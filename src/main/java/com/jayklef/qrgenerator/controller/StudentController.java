@@ -22,8 +22,14 @@ public class StudentController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Student> getStudent(@RequestBody Student student){
+    public ResponseEntity<Student> saveStudent(@RequestBody Student student){
         Student newStudent = studentService.saveStudent(student);
         return new ResponseEntity<>(newStudent, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/student/{id}")
+    public ResponseEntity<Student> getStudent(@PathVariable("id") Long id){
+        Student student = studentService.getStudent(id);
+        return new ResponseEntity<>(student, HttpStatus.FOUND);
     }
 }
