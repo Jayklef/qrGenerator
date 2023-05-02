@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -37,5 +38,33 @@ public class StudentServiceImpl implements StudentService{
             throw new RuntimeException("Student with id of " + id + "not found");
         }
         return studentRepository.findById(id).get();
+    }
+
+    @Override
+    public Student updateStudent(Long id, Student student) {
+
+        Student studentInDb = studentRepository.findById(id).get();
+
+        if (Objects.nonNull(student.getFirstName()) &&
+        !"".equalsIgnoreCase(student.getFirstName())){
+            studentInDb.setFirstName(student.getFirstName());
+        }
+
+        if (Objects.nonNull(student.getLastName()) &&
+        !"".equalsIgnoreCase(student.getLastName())){
+            studentInDb.setLastName(student.getLastName());
+        }
+
+        if (Objects.nonNull(student.getEmail()) &&
+        !"".equalsIgnoreCase(studentInDb.getEmail())){
+            studentInDb.setEmail(student.getEmail());
+        }
+
+        if (Objects.nonNull(student.getPhoneNo()) &&
+        "".equalsIgnoreCase(student.getPhoneNo().toString())){
+            studentInDb.setPhoneNo(student.getPhoneNo());
+        }
+
+        return studentRepository.save(studentInDb);
     }
 }

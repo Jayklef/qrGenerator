@@ -32,4 +32,11 @@ public class StudentController {
         Student student = studentService.getStudent(id);
         return new ResponseEntity<>(student, HttpStatus.FOUND);
     }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Student> updateStudent(@PathVariable("id") Long id,
+                                                 @RequestBody Student student){
+        Student studentInDb = studentService.updateStudent(id, student);
+        return new ResponseEntity<>(studentInDb, HttpStatus.OK);
+    }
 }
