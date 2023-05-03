@@ -1,12 +1,15 @@
 package com.jayklef.qrgenerator.controller;
 
+import com.google.zxing.WriterException;
 import com.jayklef.qrgenerator.model.Student;
 import com.jayklef.qrgenerator.service.StudentService;
+import com.jayklef.qrgenerator.utility.QRCodeGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -16,8 +19,14 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
     @GetMapping("/all")
-    public ResponseEntity<List<Student>> getAllStudent(){
+    public ResponseEntity<List<Student>> getAllStudent() throws IOException, WriterException {
         List<Student> students = studentService.getAllStudents();
+
+        if (students.size() != 0){
+            for (Student student: students){
+                QRCodeGenerator.generateQrCode(student);
+            }
+        }
         return new ResponseEntity<>(students, HttpStatus.OK);
     }
 
