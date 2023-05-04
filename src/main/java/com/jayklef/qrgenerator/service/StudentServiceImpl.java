@@ -1,5 +1,6 @@
 package com.jayklef.qrgenerator.service;
 
+import com.jayklef.qrgenerator.exception.ResourceNotFoundException;
 import com.jayklef.qrgenerator.model.Student;
 import com.jayklef.qrgenerator.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +42,7 @@ public class StudentServiceImpl implements StudentService{
         Optional<Student> student = studentRepository.findById(id);
 
         if (!student.isPresent()){
-            throw new RuntimeException("Student with id of " + id + "not found");
+            throw new ResourceNotFoundException("Student with id of " + id + "not found");
         }
         return studentRepository.findById(id).get();
     }
