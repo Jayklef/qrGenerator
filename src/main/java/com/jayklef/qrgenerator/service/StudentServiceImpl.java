@@ -1,5 +1,6 @@
 package com.jayklef.qrgenerator.service;
 
+import com.jayklef.qrgenerator.exception.ItemAlreadyExistsException;
 import com.jayklef.qrgenerator.exception.ResourceNotFoundException;
 import com.jayklef.qrgenerator.model.Student;
 import com.jayklef.qrgenerator.repository.StudentRepository;
@@ -25,7 +26,7 @@ public class StudentServiceImpl implements StudentService{
     public Student saveStudent(Student student){
 
         if (studentRepository.existsByEmail(student.getEmail())){
-            throw new RuntimeException("Student with emailId of " + student.getEmail() + "already exists");
+            throw new ItemAlreadyExistsException("Student with emailId of " + student.getEmail() + "already exists");
         }
 
         Student newStudent = new Student();
