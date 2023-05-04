@@ -22,6 +22,11 @@ public class StudentServiceImpl implements StudentService{
 
     @Override
     public Student saveStudent(Student student){
+
+        if (studentRepository.existsByEmail(student.getEmail())){
+            throw new RuntimeException("Student with emailId of " + student.getEmail() + "already exists");
+        }
+
         Student newStudent = new Student();
         newStudent.setFirstName(student.getFirstName());
         newStudent.setLastName(student.getLastName());
