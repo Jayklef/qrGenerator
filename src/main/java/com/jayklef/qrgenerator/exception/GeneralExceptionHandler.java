@@ -23,4 +23,15 @@ public class GeneralExceptionHandler extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(ItemAlreadyExistsException.class)
+    public ResponseEntity<ErrorMessage> ItemAlreadyExistException(ItemAlreadyExistsException exception,
+                                                                  WebRequest webRequest){
+        ErrorMessage message = new ErrorMessage();
+        message.setStatusCode(HttpStatus.CONFLICT.value());
+        message.setMessage(exception.getMessage());
+        message.setTimestamp(new Date());
+
+        return new ResponseEntity<>(message, HttpStatus.CONFLICT);
+    }
 }
