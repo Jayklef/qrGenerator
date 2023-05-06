@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.util.Date;
@@ -34,4 +35,16 @@ public class GeneralExceptionHandler extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<>(message, HttpStatus.CONFLICT);
     }
+    
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<ErrorMessage> MethodArgumentMismatchException(MethodArgumentTypeMismatchException exception,
+                                                                        WebRequest webRequest){
+        ErrorMessage message = new ErrorMessage();
+        message.setStatusCode(HttpStatus.BAD_REQUEST.value());
+        message.setMessage(exception.getMessage());
+        message.setTimestamp(new Date());
+
+        return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+    }
+
 }
