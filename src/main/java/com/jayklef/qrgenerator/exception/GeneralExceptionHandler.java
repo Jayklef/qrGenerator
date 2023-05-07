@@ -58,9 +58,9 @@ public class GeneralExceptionHandler extends ResponseEntityExceptionHandler {
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
         Map<String, Object> body = new HashMap<>();
-        body.put("httpStatus", HttpStatus.BAD_REQUEST.value());
+        body.put("statusCode", HttpStatus.BAD_REQUEST.value());
         body.put("httpStatus", HttpStatus.BAD_REQUEST);
-        body.put("httpStatus", new Date());
+        body.put("timestamp", new Date());
 
         List<String> errors = ex.getBindingResult()
                 .getFieldErrors()
