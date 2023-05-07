@@ -35,7 +35,7 @@ public class GeneralExceptionHandler extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<>(message, HttpStatus.CONFLICT);
     }
-    
+
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<ErrorMessage> MethodArgumentMismatchException(MethodArgumentTypeMismatchException exception,
                                                                         WebRequest webRequest){
