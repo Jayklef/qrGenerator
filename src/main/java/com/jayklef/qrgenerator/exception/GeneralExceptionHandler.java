@@ -44,15 +44,16 @@ public class GeneralExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(message, HttpStatus.CONFLICT);
     }
 
+
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<ErrorMessage> MethodArgumentMismatchException(MethodArgumentTypeMismatchException exception,
                                                                         WebRequest webRequest){
         ErrorMessage message = new ErrorMessage();
-        message.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+        message.setStatusCode(HttpStatus.BAD_REQUEST.value());
         message.setMessage(exception.getMessage());
         message.setTimestamp(new Date());
 
-        return new ResponseEntity<>(message, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
     }
 
 
