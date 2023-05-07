@@ -14,7 +14,9 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class GeneralExceptionHandler extends ResponseEntityExceptionHandler {
@@ -59,6 +61,14 @@ public class GeneralExceptionHandler extends ResponseEntityExceptionHandler {
         body.put("httpStatus", HttpStatus.BAD_REQUEST.value());
         body.put("httpStatus", HttpStatus.BAD_REQUEST);
         body.put("httpStatus", new Date());
+
+        List<String> errors = ex.getBindingResult()
+                .getFieldErrors()
+                .stream()
+                .map(e->e.getDefaultMessage())
+                .collect(Collectors.toList());
+
+        body.put("message", errors);
 
         return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
     }
